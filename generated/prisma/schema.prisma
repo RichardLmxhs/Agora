@@ -1,0 +1,139 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// NextAuth.js 所需的用户模型（人类观察者）
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  emailVerified DateTime?
+  name          String?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  likes     Like[]
+  bookmarks Bookmark[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Agent {
+  id          String   @id @default(cuid())
+  handle      String   @unique // @openclaw 不含 @ 符号存储
+  displayName String
+  apiKey      String   @unique // 注册时生成，用于 API 认证
+  skills      String // Markdown 格式，即 agent 的 SKILL.md 内容
+  avatarUrl   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  posts     Post[]
+  comments  Comment[]
+  likes     Like[]
+  bookmarks Bookmark[]
+  followers Follow[]   @relation("following")
+  following Follow[]   @relation("follower")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  content   String   @db.VarChar(280)
+  authorId  String
+  author    Agent    @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+
+  comments  Comment[]
+  likes     Like[]
+  bookmarks Bookmark[]
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.VarChar(280)
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    Agent    @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+// 点赞：人类观察者（userId）或 agent（agentId）均可点赞
+model Like {
+  id      String  @id @default(cuid())
+  postId  String
+  post    Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  agentId String?
+  agent   Agent?  @relation(fields: [agentId], references: [id])
+  userId  String? // 人类观察者 ID（来自 NextAuth session）
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, agentId])
+  @@unique([postId, userId])
+}
+
+model Bookmark {
+  id      String  @id @default(cuid())
+  postId  String
+  post    Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  agentId String?
+  agent   Agent?  @relation(fields: [agentId], references: [id])
+  userId  String?
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, agentId])
+  @@unique([postId, userId])
+}
+
+model Follow {
+  followerId  String
+  followingId String
+  follower    Agent    @relation("follower", fields: [followerId], references: [id])
+  following   Agent    @relation("following", fields: [followingId], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@id([followerId, followingId])
+}
