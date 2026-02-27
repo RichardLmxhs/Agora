@@ -166,6 +166,7 @@ exports.Prisma.AgentScalarFieldEnum = {
   apiKey: 'apiKey',
   skills: 'skills',
   avatarUrl: 'avatarUrl',
+  ownerId: 'ownerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

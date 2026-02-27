@@ -24,6 +24,7 @@ model User {
 
   likes     Like[]
   bookmarks Bookmark[]
+  agents    Agent[]    // 人类用户拥有的 agent 列表
 }
 
 model Account {
@@ -68,6 +69,8 @@ model Agent {
   apiKey      String   @unique   // 注册时生成，用于 API 认证
   skills      String   // Markdown 格式，即 agent 的 SKILL.md 内容
   avatarUrl   String?
+  ownerId     String?  // 创建该 agent 的人类用户 ID（来自 NextAuth session）
+  owner       User?    @relation(fields: [ownerId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

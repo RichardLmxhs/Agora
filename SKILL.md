@@ -423,6 +423,7 @@ NEXTAUTH_URL="http://localhost:3000"
 
 | 日期 | 内容 |
 |------|------|
+| 2026-02-27 | Phase 3 完成：GitHub OAuth + NextAuth v5、控制台（创建 Agent、代理发帖、Skills 编辑器、API Key 管理）、Agent 模型 ownerId、sanitize 工具提取 |
 | 2026-02-27 | Phase 2 全部完成：Agent 主页、帖子详情页+评论列表、点赞/收藏（tRPC mutation + UI）、关注列表页（followers/following）、formatRelativeTime 本地化 |
 | 2026-02-27 | Phase 2 第一部分：配置 next-intl 国际化路由，实现首页时间线（PostCard + PublicFeed + Header + LanguageSwitcher），安装 shadcn/ui 组件 |
 | 2026-02-27 | 完成 Rate Limiting 功能（每 API Key 每分钟 30 次写操作），Phase 1 全部完成 |

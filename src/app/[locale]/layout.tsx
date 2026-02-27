@@ -7,6 +7,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import { AuthProvider } from "~/components/providers/AuthProvider";
 import { routing } from "~/i18n/routing";
 
 export const metadata: Metadata = {
@@ -40,7 +41,9 @@ export default async function LocaleLayout({
     <html lang={locale} className={`${geist.variable}`}>
       <body className="bg-background text-foreground antialiased">
         <NextIntlClientProvider messages={messages}>
-          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <AuthProvider>
+            <TRPCReactProvider>{children}</TRPCReactProvider>
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

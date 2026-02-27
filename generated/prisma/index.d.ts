@@ -1684,6 +1684,7 @@ export namespace Prisma {
     sessions: number
     likes: number
     bookmarks: number
+    agents: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1691,6 +1692,7 @@ export namespace Prisma {
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     likes?: boolean | UserCountOutputTypeCountLikesArgs
     bookmarks?: boolean | UserCountOutputTypeCountBookmarksArgs
+    agents?: boolean | UserCountOutputTypeCountAgentsArgs
   }
 
   // Custom InputTypes
@@ -1730,6 +1732,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountBookmarksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BookmarkWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAgentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AgentWhereInput
   }
 
 
@@ -2046,6 +2055,7 @@ export namespace Prisma {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     likes?: boolean | User$likesArgs<ExtArgs>
     bookmarks?: boolean | User$bookmarksArgs<ExtArgs>
+    agents?: boolean | User$agentsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2085,6 +2095,7 @@ export namespace Prisma {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     likes?: boolean | User$likesArgs<ExtArgs>
     bookmarks?: boolean | User$bookmarksArgs<ExtArgs>
+    agents?: boolean | User$agentsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2097,6 +2108,7 @@ export namespace Prisma {
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       likes: Prisma.$LikePayload<ExtArgs>[]
       bookmarks: Prisma.$BookmarkPayload<ExtArgs>[]
+      agents: Prisma.$AgentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2504,6 +2516,7 @@ export namespace Prisma {
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     likes<T extends User$likesArgs<ExtArgs> = {}>(args?: Subset<T, User$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     bookmarks<T extends User$bookmarksArgs<ExtArgs> = {}>(args?: Subset<T, User$bookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    agents<T extends User$agentsArgs<ExtArgs> = {}>(args?: Subset<T, User$agentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3021,6 +3034,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BookmarkScalarFieldEnum | BookmarkScalarFieldEnum[]
+  }
+
+  /**
+   * User.agents
+   */
+  export type User$agentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Agent
+     */
+    select?: AgentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Agent
+     */
+    omit?: AgentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentInclude<ExtArgs> | null
+    where?: AgentWhereInput
+    orderBy?: AgentOrderByWithRelationInput | AgentOrderByWithRelationInput[]
+    cursor?: AgentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AgentScalarFieldEnum | AgentScalarFieldEnum[]
   }
 
   /**
@@ -6256,6 +6293,7 @@ export namespace Prisma {
     apiKey: string | null
     skills: string | null
     avatarUrl: string | null
+    ownerId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6267,6 +6305,7 @@ export namespace Prisma {
     apiKey: string | null
     skills: string | null
     avatarUrl: string | null
+    ownerId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6278,6 +6317,7 @@ export namespace Prisma {
     apiKey: number
     skills: number
     avatarUrl: number
+    ownerId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -6291,6 +6331,7 @@ export namespace Prisma {
     apiKey?: true
     skills?: true
     avatarUrl?: true
+    ownerId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6302,6 +6343,7 @@ export namespace Prisma {
     apiKey?: true
     skills?: true
     avatarUrl?: true
+    ownerId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6313,6 +6355,7 @@ export namespace Prisma {
     apiKey?: true
     skills?: true
     avatarUrl?: true
+    ownerId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6397,6 +6440,7 @@ export namespace Prisma {
     apiKey: string
     skills: string
     avatarUrl: string | null
+    ownerId: string | null
     createdAt: Date
     updatedAt: Date
     _count: AgentCountAggregateOutputType | null
@@ -6425,8 +6469,10 @@ export namespace Prisma {
     apiKey?: boolean
     skills?: boolean
     avatarUrl?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    owner?: boolean | Agent$ownerArgs<ExtArgs>
     posts?: boolean | Agent$postsArgs<ExtArgs>
     comments?: boolean | Agent$commentsArgs<ExtArgs>
     likes?: boolean | Agent$likesArgs<ExtArgs>
@@ -6443,8 +6489,10 @@ export namespace Prisma {
     apiKey?: boolean
     skills?: boolean
     avatarUrl?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    owner?: boolean | Agent$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
 
   export type AgentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6454,8 +6502,10 @@ export namespace Prisma {
     apiKey?: boolean
     skills?: boolean
     avatarUrl?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    owner?: boolean | Agent$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
 
   export type AgentSelectScalar = {
@@ -6465,12 +6515,14 @@ export namespace Prisma {
     apiKey?: boolean
     skills?: boolean
     avatarUrl?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "handle" | "displayName" | "apiKey" | "skills" | "avatarUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["agent"]>
+  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "handle" | "displayName" | "apiKey" | "skills" | "avatarUrl" | "ownerId" | "createdAt" | "updatedAt", ExtArgs["result"]["agent"]>
   export type AgentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | Agent$ownerArgs<ExtArgs>
     posts?: boolean | Agent$postsArgs<ExtArgs>
     comments?: boolean | Agent$commentsArgs<ExtArgs>
     likes?: boolean | Agent$likesArgs<ExtArgs>
@@ -6479,12 +6531,17 @@ export namespace Prisma {
     following?: boolean | Agent$followingArgs<ExtArgs>
     _count?: boolean | AgentCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type AgentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type AgentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AgentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | Agent$ownerArgs<ExtArgs>
+  }
+  export type AgentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | Agent$ownerArgs<ExtArgs>
+  }
 
   export type $AgentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Agent"
     objects: {
+      owner: Prisma.$UserPayload<ExtArgs> | null
       posts: Prisma.$PostPayload<ExtArgs>[]
       comments: Prisma.$CommentPayload<ExtArgs>[]
       likes: Prisma.$LikePayload<ExtArgs>[]
@@ -6499,6 +6556,7 @@ export namespace Prisma {
       apiKey: string
       skills: string
       avatarUrl: string | null
+      ownerId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["agent"]>
@@ -6895,6 +6953,7 @@ export namespace Prisma {
    */
   export interface Prisma__AgentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    owner<T extends Agent$ownerArgs<ExtArgs> = {}>(args?: Subset<T, Agent$ownerArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     posts<T extends Agent$postsArgs<ExtArgs> = {}>(args?: Subset<T, Agent$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comments<T extends Agent$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Agent$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     likes<T extends Agent$likesArgs<ExtArgs> = {}>(args?: Subset<T, Agent$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -6936,6 +6995,7 @@ export namespace Prisma {
     readonly apiKey: FieldRef<"Agent", 'String'>
     readonly skills: FieldRef<"Agent", 'String'>
     readonly avatarUrl: FieldRef<"Agent", 'String'>
+    readonly ownerId: FieldRef<"Agent", 'String'>
     readonly createdAt: FieldRef<"Agent", 'DateTime'>
     readonly updatedAt: FieldRef<"Agent", 'DateTime'>
   }
@@ -7187,6 +7247,10 @@ export namespace Prisma {
      */
     data: AgentCreateManyInput | AgentCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -7257,6 +7321,10 @@ export namespace Prisma {
      * Limit how many Agents to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -7323,6 +7391,25 @@ export namespace Prisma {
      * Limit how many Agents to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Agent.owner
+   */
+  export type Agent$ownerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -12994,6 +13081,7 @@ export namespace Prisma {
     apiKey: 'apiKey',
     skills: 'skills',
     avatarUrl: 'avatarUrl',
+    ownerId: 'ownerId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -13154,6 +13242,7 @@ export namespace Prisma {
     sessions?: SessionListRelationFilter
     likes?: LikeListRelationFilter
     bookmarks?: BookmarkListRelationFilter
+    agents?: AgentListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -13168,6 +13257,7 @@ export namespace Prisma {
     sessions?: SessionOrderByRelationAggregateInput
     likes?: LikeOrderByRelationAggregateInput
     bookmarks?: BookmarkOrderByRelationAggregateInput
+    agents?: AgentOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -13185,6 +13275,7 @@ export namespace Prisma {
     sessions?: SessionListRelationFilter
     likes?: LikeListRelationFilter
     bookmarks?: BookmarkListRelationFilter
+    agents?: AgentListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -13409,8 +13500,10 @@ export namespace Prisma {
     apiKey?: StringFilter<"Agent"> | string
     skills?: StringFilter<"Agent"> | string
     avatarUrl?: StringNullableFilter<"Agent"> | string | null
+    ownerId?: StringNullableFilter<"Agent"> | string | null
     createdAt?: DateTimeFilter<"Agent"> | Date | string
     updatedAt?: DateTimeFilter<"Agent"> | Date | string
+    owner?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     posts?: PostListRelationFilter
     comments?: CommentListRelationFilter
     likes?: LikeListRelationFilter
@@ -13426,8 +13519,10 @@ export namespace Prisma {
     apiKey?: SortOrder
     skills?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
+    ownerId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    owner?: UserOrderByWithRelationInput
     posts?: PostOrderByRelationAggregateInput
     comments?: CommentOrderByRelationAggregateInput
     likes?: LikeOrderByRelationAggregateInput
@@ -13446,8 +13541,10 @@ export namespace Prisma {
     displayName?: StringFilter<"Agent"> | string
     skills?: StringFilter<"Agent"> | string
     avatarUrl?: StringNullableFilter<"Agent"> | string | null
+    ownerId?: StringNullableFilter<"Agent"> | string | null
     createdAt?: DateTimeFilter<"Agent"> | Date | string
     updatedAt?: DateTimeFilter<"Agent"> | Date | string
+    owner?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     posts?: PostListRelationFilter
     comments?: CommentListRelationFilter
     likes?: LikeListRelationFilter
@@ -13463,6 +13560,7 @@ export namespace Prisma {
     apiKey?: SortOrder
     skills?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
+    ownerId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: AgentCountOrderByAggregateInput
@@ -13480,6 +13578,7 @@ export namespace Prisma {
     apiKey?: StringWithAggregatesFilter<"Agent"> | string
     skills?: StringWithAggregatesFilter<"Agent"> | string
     avatarUrl?: StringNullableWithAggregatesFilter<"Agent"> | string | null
+    ownerId?: StringNullableWithAggregatesFilter<"Agent"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Agent"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Agent"> | Date | string
   }
@@ -13778,6 +13877,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     likes?: LikeCreateNestedManyWithoutUserInput
     bookmarks?: BookmarkCreateNestedManyWithoutUserInput
+    agents?: AgentCreateNestedManyWithoutOwnerInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -13792,6 +13892,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    agents?: AgentUncheckedCreateNestedManyWithoutOwnerInput
   }
 
   export type UserUpdateInput = {
@@ -13806,6 +13907,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
+    agents?: AgentUpdateManyWithoutOwnerNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -13820,6 +13922,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    agents?: AgentUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -14055,6 +14158,7 @@ export namespace Prisma {
     avatarUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    owner?: UserCreateNestedOneWithoutAgentsInput
     posts?: PostCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
     likes?: LikeCreateNestedManyWithoutAgentInput
@@ -14070,6 +14174,7 @@ export namespace Prisma {
     apiKey: string
     skills: string
     avatarUrl?: string | null
+    ownerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -14089,6 +14194,7 @@ export namespace Prisma {
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneWithoutAgentsNestedInput
     posts?: PostUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
     likes?: LikeUpdateManyWithoutAgentNestedInput
@@ -14104,6 +14210,7 @@ export namespace Prisma {
     apiKey?: StringFieldUpdateOperationsInput | string
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -14121,6 +14228,7 @@ export namespace Prisma {
     apiKey: string
     skills: string
     avatarUrl?: string | null
+    ownerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14143,6 +14251,7 @@ export namespace Prisma {
     apiKey?: StringFieldUpdateOperationsInput | string
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14469,6 +14578,12 @@ export namespace Prisma {
     none?: BookmarkWhereInput
   }
 
+  export type AgentListRelationFilter = {
+    every?: AgentWhereInput
+    some?: AgentWhereInput
+    none?: AgentWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -14487,6 +14602,10 @@ export namespace Prisma {
   }
 
   export type BookmarkOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AgentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -14718,6 +14837,11 @@ export namespace Prisma {
     expires?: SortOrder
   }
 
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
   export type PostListRelationFilter = {
     every?: PostWhereInput
     some?: PostWhereInput
@@ -14755,6 +14879,7 @@ export namespace Prisma {
     apiKey?: SortOrder
     skills?: SortOrder
     avatarUrl?: SortOrder
+    ownerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14766,6 +14891,7 @@ export namespace Prisma {
     apiKey?: SortOrder
     skills?: SortOrder
     avatarUrl?: SortOrder
+    ownerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14777,6 +14903,7 @@ export namespace Prisma {
     apiKey?: SortOrder
     skills?: SortOrder
     avatarUrl?: SortOrder
+    ownerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14839,11 +14966,6 @@ export namespace Prisma {
   export type AgentNullableScalarRelationFilter = {
     is?: AgentWhereInput | null
     isNot?: AgentWhereInput | null
-  }
-
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
   }
 
   export type LikePostIdAgentIdCompoundUniqueInput = {
@@ -14959,6 +15081,13 @@ export namespace Prisma {
     connect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
   }
 
+  export type AgentCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<AgentCreateWithoutOwnerInput, AgentUncheckedCreateWithoutOwnerInput> | AgentCreateWithoutOwnerInput[] | AgentUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutOwnerInput | AgentCreateOrConnectWithoutOwnerInput[]
+    createMany?: AgentCreateManyOwnerInputEnvelope
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -14985,6 +15114,13 @@ export namespace Prisma {
     connectOrCreate?: BookmarkCreateOrConnectWithoutUserInput | BookmarkCreateOrConnectWithoutUserInput[]
     createMany?: BookmarkCreateManyUserInputEnvelope
     connect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+  }
+
+  export type AgentUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<AgentCreateWithoutOwnerInput, AgentUncheckedCreateWithoutOwnerInput> | AgentCreateWithoutOwnerInput[] | AgentUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutOwnerInput | AgentCreateOrConnectWithoutOwnerInput[]
+    createMany?: AgentCreateManyOwnerInputEnvelope
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -15059,6 +15195,20 @@ export namespace Prisma {
     deleteMany?: BookmarkScalarWhereInput | BookmarkScalarWhereInput[]
   }
 
+  export type AgentUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<AgentCreateWithoutOwnerInput, AgentUncheckedCreateWithoutOwnerInput> | AgentCreateWithoutOwnerInput[] | AgentUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutOwnerInput | AgentCreateOrConnectWithoutOwnerInput[]
+    upsert?: AgentUpsertWithWhereUniqueWithoutOwnerInput | AgentUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: AgentCreateManyOwnerInputEnvelope
+    set?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    disconnect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    delete?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    update?: AgentUpdateWithWhereUniqueWithoutOwnerInput | AgentUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: AgentUpdateManyWithWhereWithoutOwnerInput | AgentUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: AgentScalarWhereInput | AgentScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -15115,6 +15265,20 @@ export namespace Prisma {
     deleteMany?: BookmarkScalarWhereInput | BookmarkScalarWhereInput[]
   }
 
+  export type AgentUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<AgentCreateWithoutOwnerInput, AgentUncheckedCreateWithoutOwnerInput> | AgentCreateWithoutOwnerInput[] | AgentUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutOwnerInput | AgentCreateOrConnectWithoutOwnerInput[]
+    upsert?: AgentUpsertWithWhereUniqueWithoutOwnerInput | AgentUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: AgentCreateManyOwnerInputEnvelope
+    set?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    disconnect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    delete?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    update?: AgentUpdateWithWhereUniqueWithoutOwnerInput | AgentUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: AgentUpdateManyWithWhereWithoutOwnerInput | AgentUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: AgentScalarWhereInput | AgentScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
@@ -15149,6 +15313,12 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutSessionsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSessionsInput, UserUpdateWithoutSessionsInput>, UserUncheckedUpdateWithoutSessionsInput>
+  }
+
+  export type UserCreateNestedOneWithoutAgentsInput = {
+    create?: XOR<UserCreateWithoutAgentsInput, UserUncheckedCreateWithoutAgentsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAgentsInput
+    connect?: UserWhereUniqueInput
   }
 
   export type PostCreateNestedManyWithoutAuthorInput = {
@@ -15233,6 +15403,16 @@ export namespace Prisma {
     connectOrCreate?: FollowCreateOrConnectWithoutFollowerInput | FollowCreateOrConnectWithoutFollowerInput[]
     createMany?: FollowCreateManyFollowerInputEnvelope
     connect?: FollowWhereUniqueInput | FollowWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneWithoutAgentsNestedInput = {
+    create?: XOR<UserCreateWithoutAgentsInput, UserUncheckedCreateWithoutAgentsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAgentsInput
+    upsert?: UserUpsertWithoutAgentsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAgentsInput, UserUpdateWithoutAgentsInput>, UserUncheckedUpdateWithoutAgentsInput>
   }
 
   export type PostUpdateManyWithoutAuthorNestedInput = {
@@ -15956,6 +16136,50 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AgentCreateWithoutOwnerInput = {
+    id?: string
+    handle: string
+    displayName: string
+    apiKey: string
+    skills: string
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostCreateNestedManyWithoutAuthorInput
+    comments?: CommentCreateNestedManyWithoutAuthorInput
+    likes?: LikeCreateNestedManyWithoutAgentInput
+    bookmarks?: BookmarkCreateNestedManyWithoutAgentInput
+    followers?: FollowCreateNestedManyWithoutFollowingInput
+    following?: FollowCreateNestedManyWithoutFollowerInput
+  }
+
+  export type AgentUncheckedCreateWithoutOwnerInput = {
+    id?: string
+    handle: string
+    displayName: string
+    apiKey: string
+    skills: string
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    likes?: LikeUncheckedCreateNestedManyWithoutAgentInput
+    bookmarks?: BookmarkUncheckedCreateNestedManyWithoutAgentInput
+    followers?: FollowUncheckedCreateNestedManyWithoutFollowingInput
+    following?: FollowUncheckedCreateNestedManyWithoutFollowerInput
+  }
+
+  export type AgentCreateOrConnectWithoutOwnerInput = {
+    where: AgentWhereUniqueInput
+    create: XOR<AgentCreateWithoutOwnerInput, AgentUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type AgentCreateManyOwnerInputEnvelope = {
+    data: AgentCreateManyOwnerInput | AgentCreateManyOwnerInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -16068,6 +16292,37 @@ export namespace Prisma {
     userId?: StringNullableFilter<"Bookmark"> | string | null
   }
 
+  export type AgentUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: AgentWhereUniqueInput
+    update: XOR<AgentUpdateWithoutOwnerInput, AgentUncheckedUpdateWithoutOwnerInput>
+    create: XOR<AgentCreateWithoutOwnerInput, AgentUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type AgentUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: AgentWhereUniqueInput
+    data: XOR<AgentUpdateWithoutOwnerInput, AgentUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type AgentUpdateManyWithWhereWithoutOwnerInput = {
+    where: AgentScalarWhereInput
+    data: XOR<AgentUpdateManyMutationInput, AgentUncheckedUpdateManyWithoutOwnerInput>
+  }
+
+  export type AgentScalarWhereInput = {
+    AND?: AgentScalarWhereInput | AgentScalarWhereInput[]
+    OR?: AgentScalarWhereInput[]
+    NOT?: AgentScalarWhereInput | AgentScalarWhereInput[]
+    id?: StringFilter<"Agent"> | string
+    handle?: StringFilter<"Agent"> | string
+    displayName?: StringFilter<"Agent"> | string
+    apiKey?: StringFilter<"Agent"> | string
+    skills?: StringFilter<"Agent"> | string
+    avatarUrl?: StringNullableFilter<"Agent"> | string | null
+    ownerId?: StringNullableFilter<"Agent"> | string | null
+    createdAt?: DateTimeFilter<"Agent"> | Date | string
+    updatedAt?: DateTimeFilter<"Agent"> | Date | string
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     email?: string | null
@@ -16079,6 +16334,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     likes?: LikeCreateNestedManyWithoutUserInput
     bookmarks?: BookmarkCreateNestedManyWithoutUserInput
+    agents?: AgentCreateNestedManyWithoutOwnerInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -16092,6 +16348,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    agents?: AgentUncheckedCreateNestedManyWithoutOwnerInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -16121,6 +16378,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
+    agents?: AgentUpdateManyWithoutOwnerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -16134,6 +16392,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    agents?: AgentUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -16147,6 +16406,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     likes?: LikeCreateNestedManyWithoutUserInput
     bookmarks?: BookmarkCreateNestedManyWithoutUserInput
+    agents?: AgentCreateNestedManyWithoutOwnerInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -16160,6 +16420,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    agents?: AgentUncheckedCreateNestedManyWithoutOwnerInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -16189,6 +16450,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
+    agents?: AgentUpdateManyWithoutOwnerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -16202,6 +16464,40 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    agents?: AgentUncheckedUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type UserCreateWithoutAgentsInput = {
+    id?: string
+    email?: string | null
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    likes?: LikeCreateNestedManyWithoutUserInput
+    bookmarks?: BookmarkCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAgentsInput = {
+    id?: string
+    email?: string | null
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAgentsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAgentsInput, UserUncheckedCreateWithoutAgentsInput>
   }
 
   export type PostCreateWithoutAuthorInput = {
@@ -16340,6 +16636,45 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserUpsertWithoutAgentsInput = {
+    update: XOR<UserUpdateWithoutAgentsInput, UserUncheckedUpdateWithoutAgentsInput>
+    create: XOR<UserCreateWithoutAgentsInput, UserUncheckedCreateWithoutAgentsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAgentsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAgentsInput, UserUncheckedUpdateWithoutAgentsInput>
+  }
+
+  export type UserUpdateWithoutAgentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    likes?: LikeUpdateManyWithoutUserNestedInput
+    bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAgentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type PostUpsertWithWhereUniqueWithoutAuthorInput = {
     where: PostWhereUniqueInput
     update: XOR<PostUpdateWithoutAuthorInput, PostUncheckedUpdateWithoutAuthorInput>
@@ -16475,6 +16810,7 @@ export namespace Prisma {
     avatarUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    owner?: UserCreateNestedOneWithoutAgentsInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
     likes?: LikeCreateNestedManyWithoutAgentInput
     bookmarks?: BookmarkCreateNestedManyWithoutAgentInput
@@ -16489,6 +16825,7 @@ export namespace Prisma {
     apiKey: string
     skills: string
     avatarUrl?: string | null
+    ownerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -16591,6 +16928,7 @@ export namespace Prisma {
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneWithoutAgentsNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
     likes?: LikeUpdateManyWithoutAgentNestedInput
     bookmarks?: BookmarkUpdateManyWithoutAgentNestedInput
@@ -16605,6 +16943,7 @@ export namespace Prisma {
     apiKey?: StringFieldUpdateOperationsInput | string
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -16694,6 +17033,7 @@ export namespace Prisma {
     avatarUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    owner?: UserCreateNestedOneWithoutAgentsInput
     posts?: PostCreateNestedManyWithoutAuthorInput
     likes?: LikeCreateNestedManyWithoutAgentInput
     bookmarks?: BookmarkCreateNestedManyWithoutAgentInput
@@ -16708,6 +17048,7 @@ export namespace Prisma {
     apiKey: string
     skills: string
     avatarUrl?: string | null
+    ownerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -16771,6 +17112,7 @@ export namespace Prisma {
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneWithoutAgentsNestedInput
     posts?: PostUpdateManyWithoutAuthorNestedInput
     likes?: LikeUpdateManyWithoutAgentNestedInput
     bookmarks?: BookmarkUpdateManyWithoutAgentNestedInput
@@ -16785,6 +17127,7 @@ export namespace Prisma {
     apiKey?: StringFieldUpdateOperationsInput | string
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -16826,6 +17169,7 @@ export namespace Prisma {
     avatarUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    owner?: UserCreateNestedOneWithoutAgentsInput
     posts?: PostCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
     bookmarks?: BookmarkCreateNestedManyWithoutAgentInput
@@ -16840,6 +17184,7 @@ export namespace Prisma {
     apiKey: string
     skills: string
     avatarUrl?: string | null
+    ownerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -16865,6 +17210,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     bookmarks?: BookmarkCreateNestedManyWithoutUserInput
+    agents?: AgentCreateNestedManyWithoutOwnerInput
   }
 
   export type UserUncheckedCreateWithoutLikesInput = {
@@ -16878,6 +17224,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    agents?: AgentUncheckedCreateNestedManyWithoutOwnerInput
   }
 
   export type UserCreateOrConnectWithoutLikesInput = {
@@ -16934,6 +17281,7 @@ export namespace Prisma {
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneWithoutAgentsNestedInput
     posts?: PostUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
     bookmarks?: BookmarkUpdateManyWithoutAgentNestedInput
@@ -16948,6 +17296,7 @@ export namespace Prisma {
     apiKey?: StringFieldUpdateOperationsInput | string
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -16979,6 +17328,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
+    agents?: AgentUpdateManyWithoutOwnerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLikesInput = {
@@ -16992,6 +17342,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    agents?: AgentUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
   export type PostCreateWithoutBookmarksInput = {
@@ -17026,6 +17377,7 @@ export namespace Prisma {
     avatarUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    owner?: UserCreateNestedOneWithoutAgentsInput
     posts?: PostCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
     likes?: LikeCreateNestedManyWithoutAgentInput
@@ -17040,6 +17392,7 @@ export namespace Prisma {
     apiKey: string
     skills: string
     avatarUrl?: string | null
+    ownerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -17065,6 +17418,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     likes?: LikeCreateNestedManyWithoutUserInput
+    agents?: AgentCreateNestedManyWithoutOwnerInput
   }
 
   export type UserUncheckedCreateWithoutBookmarksInput = {
@@ -17078,6 +17432,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    agents?: AgentUncheckedCreateNestedManyWithoutOwnerInput
   }
 
   export type UserCreateOrConnectWithoutBookmarksInput = {
@@ -17134,6 +17489,7 @@ export namespace Prisma {
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneWithoutAgentsNestedInput
     posts?: PostUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
     likes?: LikeUpdateManyWithoutAgentNestedInput
@@ -17148,6 +17504,7 @@ export namespace Prisma {
     apiKey?: StringFieldUpdateOperationsInput | string
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -17179,6 +17536,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
+    agents?: AgentUpdateManyWithoutOwnerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBookmarksInput = {
@@ -17192,6 +17550,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    agents?: AgentUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
   export type AgentCreateWithoutFollowingInput = {
@@ -17203,6 +17562,7 @@ export namespace Prisma {
     avatarUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    owner?: UserCreateNestedOneWithoutAgentsInput
     posts?: PostCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
     likes?: LikeCreateNestedManyWithoutAgentInput
@@ -17217,6 +17577,7 @@ export namespace Prisma {
     apiKey: string
     skills: string
     avatarUrl?: string | null
+    ownerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -17240,6 +17601,7 @@ export namespace Prisma {
     avatarUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    owner?: UserCreateNestedOneWithoutAgentsInput
     posts?: PostCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
     likes?: LikeCreateNestedManyWithoutAgentInput
@@ -17254,6 +17616,7 @@ export namespace Prisma {
     apiKey: string
     skills: string
     avatarUrl?: string | null
+    ownerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -17288,6 +17651,7 @@ export namespace Prisma {
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneWithoutAgentsNestedInput
     posts?: PostUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
     likes?: LikeUpdateManyWithoutAgentNestedInput
@@ -17302,6 +17666,7 @@ export namespace Prisma {
     apiKey?: StringFieldUpdateOperationsInput | string
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -17331,6 +17696,7 @@ export namespace Prisma {
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneWithoutAgentsNestedInput
     posts?: PostUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
     likes?: LikeUpdateManyWithoutAgentNestedInput
@@ -17345,6 +17711,7 @@ export namespace Prisma {
     apiKey?: StringFieldUpdateOperationsInput | string
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -17384,6 +17751,17 @@ export namespace Prisma {
     id?: string
     postId: string
     agentId?: string | null
+  }
+
+  export type AgentCreateManyOwnerInput = {
+    id?: string
+    handle: string
+    displayName: string
+    apiKey: string
+    skills: string
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -17480,6 +17858,51 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     postId?: StringFieldUpdateOperationsInput | string
     agentId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AgentUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    handle?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    apiKey?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+    comments?: CommentUpdateManyWithoutAuthorNestedInput
+    likes?: LikeUpdateManyWithoutAgentNestedInput
+    bookmarks?: BookmarkUpdateManyWithoutAgentNestedInput
+    followers?: FollowUpdateManyWithoutFollowingNestedInput
+    following?: FollowUpdateManyWithoutFollowerNestedInput
+  }
+
+  export type AgentUncheckedUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    handle?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    apiKey?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    likes?: LikeUncheckedUpdateManyWithoutAgentNestedInput
+    bookmarks?: BookmarkUncheckedUpdateManyWithoutAgentNestedInput
+    followers?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
+    following?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
+  }
+
+  export type AgentUncheckedUpdateManyWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    handle?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    apiKey?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PostCreateManyAuthorInput = {

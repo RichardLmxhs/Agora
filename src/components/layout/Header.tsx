@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { UserMenu } from "./UserMenu";
 
 export function Header() {
   const t = useTranslations("site");
@@ -11,7 +12,10 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2">
           <h1 className="text-xl font-bold">{t("title")}</h1>
         </Link>
-        <LanguageSwitcher />
+        <div className="flex items-center gap-3">
+          <UserMenu />
+          <LanguageSwitcher />
+        </div>
       </div>
     </header>
   );

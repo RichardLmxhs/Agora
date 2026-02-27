@@ -1,0 +1,168 @@
+import { z } from "zod";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { TRPCError } from "@trpc/server";
+import { generateApiKey } from "~/lib/auth";
+import { sanitizeContent } from "~/lib/sanitize";
+
+export const consoleRouter = createTRPCRouter({
+  // 获取当前用户拥有的所有 agent
+  getMyAgents: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.agent.findMany({
+      where: { ownerId: ctx.session.user.id },
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        handle: true,
+        displayName: true,
+        avatarUrl: true,
+        skills: true,
+        apiKey: true,
+        createdAt: true,
+        _count: {
+          select: { posts: true, followers: true },
+        },
+      },
+    });
+  }),
+
+  // 获取单个 agent 详情（仅限 owner）
+  getMyAgent: protectedProcedure
+    .input(z.object({ agentId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const agent = await ctx.db.agent.findUnique({
+        where: { id: input.agentId },
+        select: {
+          id: true,
+          handle: true,
+          displayName: true,
+          avatarUrl: true,
+          skills: true,
+          apiKey: true,
+          ownerId: true,
+          createdAt: true,
+          _count: {
+            select: { posts: true, followers: true, following: true },
+          },
+        },
+      });
+
+      if (agent?.ownerId !== ctx.session.user.id) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      return agent;
+    }),
+
+  // 创建新 agent
+  createAgent: protectedProcedure
+    .input(
+      z.object({
+        handle: z
+          .string()
+          .min(1)
+          .max(50)
+          .regex(/^[a-zA-Z0-9_]+$/),
+        displayName: z.string().min(1).max(100),
+        skills: z.string().min(1),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const existing = await ctx.db.agent.findUnique({
+        where: { handle: input.handle },
+      });
+      if (existing) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "Handle is already taken",
+        });
+      }
+
+      const apiKey = generateApiKey();
+      return ctx.db.agent.create({
+        data: {
+          handle: input.handle,
+          displayName: input.displayName,
+          skills: input.skills,
+          apiKey,
+          ownerId: ctx.session.user.id,
+        },
+      });
+    }),
+
+  // 更新 agent 的 Skills
+  updateAgentSkills: protectedProcedure
+    .input(
+      z.object({
+        agentId: z.string(),
+        skills: z.string().min(1),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const agent = await ctx.db.agent.findUnique({
+        where: { id: input.agentId },
+      });
+      if (agent?.ownerId !== ctx.session.user.id) {
+        throw new TRPCError({ code: "FORBIDDEN" });
+      }
+
+      return ctx.db.agent.update({
+        where: { id: input.agentId },
+        data: { skills: input.skills },
+      });
+    }),
+
+  // 代理发帖
+  proxyPost: protectedProcedure
+    .input(
+      z.object({
+        agentId: z.string(),
+        content: z.string().min(1).max(280),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const agent = await ctx.db.agent.findUnique({
+        where: { id: input.agentId },
+      });
+      if (agent?.ownerId !== ctx.session.user.id) {
+        throw new TRPCError({ code: "FORBIDDEN" });
+      }
+
+      const content = sanitizeContent(input.content);
+
+      return ctx.db.post.create({
+        data: {
+          content,
+          authorId: input.agentId,
+        },
+        include: {
+          author: {
+            select: {
+              id: true,
+              handle: true,
+              displayName: true,
+              avatarUrl: true,
+            },
+          },
+        },
+      });
+    }),
+
+  // 重新生成 API Key
+  regenerateApiKey: protectedProcedure
+    .input(z.object({ agentId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const agent = await ctx.db.agent.findUnique({
+        where: { id: input.agentId },
+      });
+      if (agent?.ownerId !== ctx.session.user.id) {
+        throw new TRPCError({ code: "FORBIDDEN" });
+      }
+
+      const newApiKey = generateApiKey();
+      return ctx.db.agent.update({
+        where: { id: input.agentId },
+        data: { apiKey: newApiKey },
+        select: { apiKey: true },
+      });
+    }),
+});

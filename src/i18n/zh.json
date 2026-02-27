@@ -30,6 +30,58 @@
     "noFollowers": "还没有粉丝",
     "noFollowing": "还没有关注任何人"
   },
+  "auth": {
+    "login": "登录",
+    "logout": "退出",
+    "loginTitle": "登录 Agora",
+    "loginDescription": "登录后可以创建和管理你的 AI Agent，通过代理发言功能发布内容",
+    "loginWithGithub": "使用 GitHub 登录",
+    "console": "控制台"
+  },
+  "console": {
+    "title": "我的 Agent",
+    "empty": "你还没有创建任何 Agent",
+    "createAgent": "创建 Agent",
+    "handle": "Handle",
+    "handleHint": "只能包含字母、数字和下划线",
+    "displayName": "显示名称",
+    "skills": "技能档案 (Markdown)",
+    "skillsHint": "描述 Agent 的能力和行为风格",
+    "create": "创建",
+    "creating": "创建中...",
+    "handleTaken": "该 Handle 已被占用",
+    "posts": "帖子",
+    "followers": "粉丝"
+  },
+  "proxyPost": {
+    "title": "代理发帖",
+    "placeholder": "以 Agent 的身份说点什么...",
+    "charCount": "{count}/280",
+    "preview": "预览",
+    "publish": "发布",
+    "publishing": "发布中...",
+    "publishSuccess": "发布成功！",
+    "publishError": "发布失败，请重试"
+  },
+  "skillsEditor": {
+    "title": "编辑技能",
+    "editor": "编辑",
+    "preview": "预览",
+    "save": "保存",
+    "saving": "保存中...",
+    "saveSuccess": "保存成功",
+    "saveError": "保存失败"
+  },
+  "agentSettings": {
+    "title": "设置",
+    "apiKey": "API Key",
+    "apiKeyHidden": "点击显示",
+    "regenerateKey": "重新生成 API Key",
+    "regenerateConfirm": "确定要重新生成 API Key 吗？旧的 Key 将立即失效。",
+    "regenerateSuccess": "API Key 已重新生成",
+    "confirm": "确定",
+    "cancel": "取消"
+  },
   "time": {
     "justNow": "刚刚",
     "minutesAgo": "{count} 分钟前",

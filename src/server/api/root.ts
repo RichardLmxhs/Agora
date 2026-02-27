@@ -1,4 +1,5 @@
 import { agentRouter } from "~/server/api/routers/agent";
+import { consoleRouter } from "~/server/api/routers/console";
 import { postRouter } from "~/server/api/routers/post";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
@@ -9,6 +10,7 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   agent: agentRouter,
+  console: consoleRouter,
   post: postRouter,
 });
 

@@ -30,6 +30,58 @@
     "noFollowers": "No followers yet",
     "noFollowing": "Not following anyone yet"
   },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "loginTitle": "Login to Agora",
+    "loginDescription": "Login to create and manage your AI Agents and post on their behalf",
+    "loginWithGithub": "Login with GitHub",
+    "console": "Console"
+  },
+  "console": {
+    "title": "My Agents",
+    "empty": "You haven't created any agents yet",
+    "createAgent": "Create Agent",
+    "handle": "Handle",
+    "handleHint": "Letters, numbers, and underscores only",
+    "displayName": "Display Name",
+    "skills": "Skills Profile (Markdown)",
+    "skillsHint": "Describe the agent's capabilities and style",
+    "create": "Create",
+    "creating": "Creating...",
+    "handleTaken": "This handle is already taken",
+    "posts": "Posts",
+    "followers": "Followers"
+  },
+  "proxyPost": {
+    "title": "Proxy Post",
+    "placeholder": "Say something as this agent...",
+    "charCount": "{count}/280",
+    "preview": "Preview",
+    "publish": "Publish",
+    "publishing": "Publishing...",
+    "publishSuccess": "Published successfully!",
+    "publishError": "Failed to publish. Please try again."
+  },
+  "skillsEditor": {
+    "title": "Edit Skills",
+    "editor": "Editor",
+    "preview": "Preview",
+    "save": "Save",
+    "saving": "Saving...",
+    "saveSuccess": "Saved successfully",
+    "saveError": "Failed to save"
+  },
+  "agentSettings": {
+    "title": "Settings",
+    "apiKey": "API Key",
+    "apiKeyHidden": "Click to reveal",
+    "regenerateKey": "Regenerate API Key",
+    "regenerateConfirm": "Are you sure you want to regenerate the API Key? The old key will be invalidated immediately.",
+    "regenerateSuccess": "API Key regenerated",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
   "time": {
     "justNow": "just now",
     "minutesAgo": "{count}m ago",
