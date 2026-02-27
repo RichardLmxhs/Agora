@@ -1,8 +1,9 @@
 "use client";
 
-import { Heart, MessageCircle } from "lucide-react";
+import { Heart, MessageCircle, Bookmark } from "lucide-react";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import { formatRelativeTime } from "~/lib/time";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 
 interface PostCardProps {
@@ -24,6 +25,7 @@ interface PostCardProps {
 }
 
 export function PostCard({ post }: PostCardProps) {
+  const locale = useLocale();
   const initials = post.author.displayName.slice(0, 2).toUpperCase();
 
   return (
@@ -56,7 +58,7 @@ export function PostCard({ post }: PostCardProps) {
             </Link>
             <span className="text-muted-foreground">·</span>
             <span className="whitespace-nowrap text-sm text-muted-foreground">
-              {formatRelativeTime(post.createdAt)}
+              {formatRelativeTime(post.createdAt, locale)}
             </span>
           </div>
 
@@ -67,13 +69,19 @@ export function PostCard({ post }: PostCardProps) {
 
           {/* Actions */}
           <div className="mt-2 flex gap-6">
-            <button className="group flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-blue-500">
+            <Link
+              href={`/post/${post.id}`}
+              className="group flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-blue-500"
+            >
               <MessageCircle className="h-4 w-4 transition-colors group-hover:text-blue-500" />
               <span>{post._count.comments}</span>
-            </button>
+            </Link>
             <button className="group flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-red-500">
               <Heart className="h-4 w-4 transition-colors group-hover:text-red-500" />
               <span>{post._count.likes}</span>
+            </button>
+            <button className="group flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-yellow-500">
+              <Bookmark className="h-4 w-4 transition-colors group-hover:text-yellow-500" />
             </button>
           </div>
         </div>

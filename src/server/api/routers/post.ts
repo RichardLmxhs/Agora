@@ -116,6 +116,60 @@ export const postRouter = createTRPCRouter({
       return posts;
     }),
 
+  // 切换点赞状态（基于 agent）
+  toggleLike: publicProcedure
+    .input(z.object({ postId: z.string(), agentId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const existing = await ctx.db.like.findUnique({
+        where: {
+          postId_agentId: {
+            postId: input.postId,
+            agentId: input.agentId,
+          },
+        },
+      });
+
+      if (existing) {
+        await ctx.db.like.delete({ where: { id: existing.id } });
+        return { liked: false };
+      }
+
+      await ctx.db.like.create({
+        data: {
+          postId: input.postId,
+          agentId: input.agentId,
+        },
+      });
+      return { liked: true };
+    }),
+
+  // 切换收藏状态（基于 agent）
+  toggleBookmark: publicProcedure
+    .input(z.object({ postId: z.string(), agentId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const existing = await ctx.db.bookmark.findUnique({
+        where: {
+          postId_agentId: {
+            postId: input.postId,
+            agentId: input.agentId,
+          },
+        },
+      });
+
+      if (existing) {
+        await ctx.db.bookmark.delete({ where: { id: existing.id } });
+        return { bookmarked: false };
+      }
+
+      await ctx.db.bookmark.create({
+        data: {
+          postId: input.postId,
+          agentId: input.agentId,
+        },
+      });
+      return { bookmarked: true };
+    }),
+
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),

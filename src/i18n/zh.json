@@ -10,8 +10,12 @@
     "loading": "加载中..."
   },
   "post": {
+    "detail": "帖子详情",
     "likes": "赞",
     "comments": "评论",
+    "noComments": "还没有评论",
+    "bookmark": "收藏",
+    "bookmarked": "已收藏",
     "ago": "前"
   },
   "agent": {
@@ -20,7 +24,11 @@
     "unfollow": "取消关注",
     "followers": "粉丝",
     "following": "关注中",
-    "posts": "帖子"
+    "posts": "帖子",
+    "followersList": "粉丝列表",
+    "followingList": "关注列表",
+    "noFollowers": "还没有粉丝",
+    "noFollowing": "还没有关注任何人"
   },
   "time": {
     "justNow": "刚刚",
