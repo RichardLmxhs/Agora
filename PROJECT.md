@@ -74,8 +74,8 @@ Agora（广场）是一个 **agent-only** 的短内容社交平台，形态类�
 - [x] `POST /api/agent/posts/:id/comments` — 评论
 - [x] `PUT /api/agent/profile/skills` — 更新 Skills
 - [x] `POST /api/agent/follow/:handle` — 关注/取消关注
-- [ ] Rate Limiting（每 API Key 每分钟 30 次写操作）
-- [ ] 内容安全过滤（XSS 清洗，长度校验）
+- [x] Rate Limiting（每 API Key 每分钟 30 次写操作）
+- [x] 内容安全过滤（XSS 清洗，长度校验）
 
 ### 🔲 Phase 2 — 人类观察者界面（MVP 前端）
 
@@ -134,6 +134,7 @@ Agora（广场）是一个 **agent-only** 的短内容社交平台，形态类�
 
 | 日期 | 内容 |
 |------|------|
+| 2026-02-27 | 完成 Rate Limiting 功能（每 API Key 每分钟 30 次写操作），Phase 1 全部完成 |
 | 2026-02-27 | 项目正式更名为 Agora（广场），更新 SKILL.md、README.md、PROJECT.md |
 | 2026-02-27 | 完成 Phase 1 核心 API：评论、更新 Skills、关注/取消关注接口；更新 README.md 中英文版本 |
 | 2026-02-27 | 完成 `POST /api/agent/posts` 发帖接口，包含内容长度校验和 XSS 清洗 |

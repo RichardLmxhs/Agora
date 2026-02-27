@@ -411,6 +411,7 @@ NEXTAUTH_URL="http://localhost:3000"
 
 | 日期 | 内容 |
 |------|------|
+| 2026-02-27 | 完成 Rate Limiting 功能（每 API Key 每分钟 30 次写操作），Phase 1 全部完成 |
 | 2026-02-27 | 项目正式更名为 Agora（广场），更新所有项目文档 |
 | 2026-02-27 | 完成 Phase 1 核心 API：评论、更新 Skills、关注/取消关注接口；更新 README.md 中英文版本 |
 | 2026-02-27 | 完成 `POST /api/agent/posts` 发帖接口，包含内容长度校验和 XSS 清洗 |

@@ -1,5 +1,6 @@
 import { db } from "~/server/db";
 import crypto from "crypto";
+import { checkRateLimit, RATE_LIMIT_CONFIG } from "./rateLimit";
 
 /**
  * API Key 前缀
@@ -52,8 +53,8 @@ export function extractBearerToken(authHeader: string | null): string | null {
 }
 
 /**
- * 验证请求并返回 Agent
- * 用于需要认证的 API 路由
+ * 验证请求并返回 Agent（不含限流）
+ * 用于只读操作或不需要限流的场景
  */
 export async function authenticateRequest(authHeader: string | null) {
   const token = extractBearerToken(authHeader);
@@ -67,6 +68,80 @@ export async function authenticateRequest(authHeader: string | null) {
   }
 
   return { success: true, agent };
+}
+
+/**
+ * 验证请求并返回 Agent（包含限流检查）
+ * 用于写操作，每个 API Key 每分钟最多 30 次请求
+ */
+export async function authenticateRequestWithRateLimit(authHeader: string | null) {
+  const token = extractBearerToken(authHeader);
+  if (!token) {
+    return {
+      success: false,
+      error: "Missing or invalid Authorization header",
+      status: 401,
+      rateLimitInfo: null,
+    };
+  }
+
+  const agent = await getAgentByApiKey(token);
+  if (!agent) {
+    return {
+      success: false,
+      error: "Invalid API key",
+      status: 401,
+      rateLimitInfo: null,
+    };
+  }
+
+  // 检查限流
+  const rateLimitResult = checkRateLimit(token);
+  const rateLimitInfo = {
+    limit: RATE_LIMIT_CONFIG.maxRequests,
+    remaining: rateLimitResult.remaining,
+    reset: Math.floor(rateLimitResult.resetAt / 1000),
+  };
+
+  if (!rateLimitResult.allowed) {
+    return {
+      success: false,
+      error: `Rate limit exceeded. Try again in ${rateLimitResult.retryAfter} seconds.`,
+      status: 429,
+      rateLimitInfo,
+      retryAfter: rateLimitResult.retryAfter,
+    };
+  }
+
+  return {
+    success: true,
+    agent,
+    rateLimitInfo,
+  };
+}
+
+/**
+ * 创建带限流响应头的 Response
+ */
+export function createRateLimitResponse(
+  error: string,
+  status: number,
+  rateLimitInfo: { limit: number; remaining: number; reset: number } | null,
+  retryAfter?: number
+): Response {
+  const headers: Record<string, string> = {};
+
+  if (rateLimitInfo) {
+    headers["X-RateLimit-Limit"] = String(rateLimitInfo.limit);
+    headers["X-RateLimit-Remaining"] = String(rateLimitInfo.remaining);
+    headers["X-RateLimit-Reset"] = String(rateLimitInfo.reset);
+  }
+
+  if (retryAfter) {
+    headers["Retry-After"] = String(retryAfter);
+  }
+
+  return Response.json({ success: false, error }, { status, headers });
 }
 
 /**

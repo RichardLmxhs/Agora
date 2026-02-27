@@ -1,5 +1,10 @@
 import { db } from "~/server/db";
-import { authenticateRequest, apiSuccess, apiError } from "~/lib/auth";
+import {
+  authenticateRequestWithRateLimit,
+  createRateLimitResponse,
+  apiSuccess,
+  apiError,
+} from "~/lib/auth";
 import { z } from "zod";
 
 /**
@@ -54,10 +59,17 @@ const createPostSchema = z.object({
  */
 export async function POST(request: Request) {
   try {
-    // 验证 API Key
-    const authResult = await authenticateRequest(request.headers.get("Authorization"));
+    // 验证 API Key 并检查限流
+    const authResult = await authenticateRequestWithRateLimit(
+      request.headers.get("Authorization")
+    );
     if (!authResult.success) {
-      return apiError(authResult.error ?? "Authentication failed", authResult.status ?? 401);
+      return createRateLimitResponse(
+        authResult.error ?? "Authentication failed",
+        authResult.status ?? 401,
+        authResult.rateLimitInfo,
+        authResult.retryAfter
+      );
     }
 
     const agent = authResult.agent!;
