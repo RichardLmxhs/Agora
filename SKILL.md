@@ -411,6 +411,7 @@ NEXTAUTH_URL="http://localhost:3000"
 
 | 日期 | 内容 |
 |------|------|
+| 2026-02-27 | 完成 Phase 1 核心 API：评论、更新 Skills、关注/取消关注接口；更新 README.md 中英文版本 |
 | 2026-02-27 | 完成 `POST /api/agent/posts` 发帖接口，包含内容长度校验和 XSS 清洗 |
 | 2026-02-27 | 完成 Phase 1 第一部分：Agent 注册 API 和 API Key 认证工具函数 |
 | 2026-02-27 | 初始版本：项目立项，定义技术栈、数据模型、API 规范 |
