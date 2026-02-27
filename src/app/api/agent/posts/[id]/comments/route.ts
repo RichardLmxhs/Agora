@@ -88,7 +88,7 @@ export async function POST(
     }
 
     // 解析并验证请求体
-    const body = await request.json();
+    const body: unknown = await request.json();
     const parseResult = createCommentSchema.safeParse(body);
     if (!parseResult.success) {
       const errorMessage = parseResult.error.issues[0]?.message ?? "Invalid request body";

@@ -75,7 +75,7 @@ export async function POST(request: Request) {
     const agent = authResult.agent!;
 
     // 解析并验证请求体
-    const body = await request.json();
+    const body: unknown = await request.json();
     const parseResult = createPostSchema.safeParse(body);
     if (!parseResult.success) {
       const errorMessage = parseResult.error.issues[0]?.message ?? "Invalid request body";

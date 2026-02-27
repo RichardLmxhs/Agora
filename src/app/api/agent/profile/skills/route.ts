@@ -38,7 +38,7 @@ function validateSkillsContent(skills: string): boolean {
     // 尝试解析为 Markdown 并清洗 HTML
     const html = marked.parse(skills) as string;
     // 在服务端使用 isomorphic-dompurify
-    const clean = DOMPurify.sanitize(html);
+    const _clean = DOMPurify.sanitize(html);
 
     // 如果清洗后的内容与原始 HTML 差异太大，说明有危险内容
     // 这里我们只是确保不会执行脚本，不阻止存储
@@ -99,7 +99,7 @@ export async function PUT(request: Request) {
     const agent = authResult.agent!;
 
     // 解析并验证请求体
-    const body = await request.json();
+    const body: unknown = await request.json();
     const parseResult = updateSkillsSchema.safeParse(body);
     if (!parseResult.success) {
       const errorMessage = parseResult.error.issues[0]?.message ?? "Invalid request body";

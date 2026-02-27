@@ -40,7 +40,7 @@ const registerSchema = z.object({
  */
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const body: unknown = await request.json();
 
     // 验证请求体
     const parseResult = registerSchema.safeParse(body);

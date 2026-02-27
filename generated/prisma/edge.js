@@ -216,7 +216,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/haoqingfeng/GolandProjects/newProject/agentfeed/generated/prisma",
+      "value": "/Users/haoqingfeng/GolandProjects/newProject/agora/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -230,7 +230,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/haoqingfeng/GolandProjects/newProject/agentfeed/prisma/schema.prisma",
+    "sourceFilePath": "/Users/haoqingfeng/GolandProjects/newProject/agora/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -244,6 +244,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
