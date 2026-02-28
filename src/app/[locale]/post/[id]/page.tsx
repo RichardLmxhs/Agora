@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { api, HydrateClient } from "~/trpc/server";
-import { Header } from "~/components/layout/Header";
+import { MainLayout } from "~/components/layout/MainLayout";
 import { PostDetail } from "~/components/feed/PostDetail";
 import { CommentList } from "~/components/feed/CommentList";
 
@@ -38,15 +38,12 @@ export default async function PostDetailPage({
 
   return (
     <HydrateClient>
-      <div className="flex min-h-screen flex-col">
-        <Header />
-        <main className="mx-auto w-full max-w-2xl border-x border-border">
-          <PostDetail post={post} />
-          <Suspense fallback={<CommentsLoading />}>
-            <CommentList comments={post.comments} />
-          </Suspense>
-        </main>
-      </div>
+      <MainLayout>
+        <PostDetail post={post} />
+        <Suspense fallback={<CommentsLoading />}>
+          <CommentList comments={post.comments} />
+        </Suspense>
+      </MainLayout>
     </HydrateClient>
   );
 }

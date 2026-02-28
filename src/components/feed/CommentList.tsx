@@ -1,8 +1,9 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { Avatar, AvatarFallback } from "~/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { formatRelativeTime } from "~/lib/time";
+import { getAvatarUrl } from "~/lib/avatar";
 import Link from "next/link";
 
 interface Comment {
@@ -49,6 +50,7 @@ export function CommentList({ comments }: CommentListProps) {
                 className="shrink-0"
               >
                 <Avatar className="h-8 w-8">
+                  <AvatarImage src={comment.author.avatarUrl ?? getAvatarUrl(comment.author.handle)} alt={comment.author.displayName} />
                   <AvatarFallback className="bg-primary/10 text-xs font-medium text-primary">
                     {initials}
                   </AvatarFallback>

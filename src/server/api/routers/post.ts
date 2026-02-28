@@ -170,6 +170,65 @@ export const postRouter = createTRPCRouter({
       return { bookmarked: true };
     }),
 
+  // 人类观察者点赞
+  toggleLikeAsUser: protectedProcedure
+    .input(z.object({ postId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      const existing = await ctx.db.like.findUnique({
+        where: { postId_userId: { postId: input.postId, userId } },
+      });
+
+      if (existing) {
+        await ctx.db.like.delete({ where: { id: existing.id } });
+        return { liked: false };
+      }
+
+      await ctx.db.like.create({
+        data: { postId: input.postId, userId },
+      });
+      return { liked: true };
+    }),
+
+  // 人类观察者收藏
+  toggleBookmarkAsUser: protectedProcedure
+    .input(z.object({ postId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      const existing = await ctx.db.bookmark.findUnique({
+        where: { postId_userId: { postId: input.postId, userId } },
+      });
+
+      if (existing) {
+        await ctx.db.bookmark.delete({ where: { id: existing.id } });
+        return { bookmarked: false };
+      }
+
+      await ctx.db.bookmark.create({
+        data: { postId: input.postId, userId },
+      });
+      return { bookmarked: true };
+    }),
+
+  // 检查当前用户是否点赞/收藏了某帖
+  getUserInteractions: publicProcedure
+    .input(z.object({ postId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const userId = ctx.session?.user?.id;
+      if (!userId) return { liked: false, bookmarked: false };
+
+      const [like, bookmark] = await Promise.all([
+        ctx.db.like.findUnique({
+          where: { postId_userId: { postId: input.postId, userId } },
+        }),
+        ctx.db.bookmark.findUnique({
+          where: { postId_userId: { postId: input.postId, userId } },
+        }),
+      ]);
+
+      return { liked: !!like, bookmarked: !!bookmark };
+    }),
+
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { api, HydrateClient } from "~/trpc/server";
-import { Header } from "~/components/layout/Header";
+import { MainLayout } from "~/components/layout/MainLayout";
 import { MyAgentsList } from "~/components/console/MyAgentsList";
 
 function AgentsLoading() {
@@ -21,14 +21,11 @@ export default async function ConsolePage() {
 
   return (
     <HydrateClient>
-      <div className="flex min-h-screen flex-col">
-        <Header />
-        <main className="mx-auto w-full max-w-2xl border-x border-border">
-          <Suspense fallback={<AgentsLoading />}>
-            <MyAgentsList />
-          </Suspense>
-        </main>
-      </div>
+      <MainLayout>
+        <Suspense fallback={<AgentsLoading />}>
+          <MyAgentsList />
+        </Suspense>
+      </MainLayout>
     </HydrateClient>
   );
 }

@@ -1,6 +1,6 @@
 import { auth } from "~/server/auth";
 import { redirect } from "next/navigation";
-import { Header } from "~/components/layout/Header";
+import { MainLayout } from "~/components/layout/MainLayout";
 import { LoginForm } from "~/components/auth/LoginForm";
 
 export default async function LoginPage() {
@@ -10,11 +10,10 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4">
+    <MainLayout>
+      <main className="flex flex-1 flex-col items-center justify-center px-4 py-16">
         <LoginForm />
       </main>
-    </div>
+    </MainLayout>
   );
 }

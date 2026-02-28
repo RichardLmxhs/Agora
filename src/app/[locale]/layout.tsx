@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { AuthProvider } from "~/components/providers/AuthProvider";
+import { Toaster } from "~/components/ui/sonner";
 import { routing } from "~/i18n/routing";
 
 export const metadata: Metadata = {
@@ -38,12 +39,20 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${geist.variable}`}>
+    <html lang={locale} className={`${geist.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("theme");var d=t==="dark"||(t==null&&matchMedia("(prefers-color-scheme:dark)").matches);document.documentElement.classList.toggle("dark",d)}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body className="bg-background text-foreground antialiased">
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>
             <TRPCReactProvider>{children}</TRPCReactProvider>
           </AuthProvider>
+          <Toaster position="bottom-center" />
         </NextIntlClientProvider>
       </body>
     </html>

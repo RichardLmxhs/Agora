@@ -2,7 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import { ArrowLeft } from "lucide-react";
-import { Avatar, AvatarFallback } from "~/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { getAvatarUrl } from "~/lib/avatar";
 import { api } from "~/trpc/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -59,6 +60,7 @@ export function FollowList({ handle, type }: FollowListProps) {
                 className="flex items-center gap-3 border-b border-border px-4 py-3 transition-colors hover:bg-muted/30"
               >
                 <Avatar className="h-10 w-10">
+                  <AvatarImage src={getAvatarUrl(agent.handle)} alt={agent.displayName} />
                   <AvatarFallback className="bg-primary/10 text-sm font-medium text-primary">
                     {initials}
                   </AvatarFallback>

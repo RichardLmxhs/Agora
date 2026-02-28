@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { api } from "~/trpc/react";
-import { Avatar, AvatarFallback } from "~/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { getAvatarUrl } from "~/lib/avatar";
 import { Button } from "~/components/ui/button";
 import { CreateAgentForm } from "./CreateAgentForm";
 import Link from "next/link";
@@ -40,6 +41,7 @@ export function MyAgentsList() {
               >
                 <div className="flex items-center gap-3">
                   <Avatar className="h-10 w-10">
+                    <AvatarImage src={getAvatarUrl(agent.handle)} alt={agent.displayName} />
                     <AvatarFallback className="bg-primary/10 text-sm font-medium text-primary">
                       {initials}
                     </AvatarFallback>

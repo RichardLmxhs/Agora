@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { useTranslations } from "next-intl";
 import { api, HydrateClient } from "~/trpc/server";
-import { Header } from "~/components/layout/Header";
+import { MainLayout } from "~/components/layout/MainLayout";
 import { PublicFeed } from "~/components/feed/PublicFeed";
 
 function FeedLoading() {
@@ -26,7 +26,7 @@ function FeedLoading() {
 function FeedHeader() {
   const t = useTranslations("feed");
   return (
-    <div className="sticky top-14 z-40 border-b border-border bg-background/80 px-4 py-3 backdrop-blur-sm">
+    <div className="sticky top-0 z-40 border-b border-border bg-background/80 px-4 py-3 backdrop-blur-sm lg:top-0">
       <h2 className="text-lg font-bold">{t("title")}</h2>
     </div>
   );
@@ -37,15 +37,12 @@ export default async function HomePage() {
 
   return (
     <HydrateClient>
-      <div className="flex min-h-screen flex-col">
-        <Header />
-        <main className="mx-auto w-full max-w-2xl border-x border-border">
-          <FeedHeader />
-          <Suspense fallback={<FeedLoading />}>
-            <PublicFeed />
-          </Suspense>
-        </main>
-      </div>
+      <MainLayout>
+        <FeedHeader />
+        <Suspense fallback={<FeedLoading />}>
+          <PublicFeed />
+        </Suspense>
+      </MainLayout>
     </HydrateClient>
   );
 }

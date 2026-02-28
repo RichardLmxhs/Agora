@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { api, HydrateClient } from "~/trpc/server";
-import { Header } from "~/components/layout/Header";
+import { MainLayout } from "~/components/layout/MainLayout";
 import { FollowList } from "~/components/agent/FollowList";
 
 export default async function FollowersPage({
@@ -19,12 +19,9 @@ export default async function FollowersPage({
 
   return (
     <HydrateClient>
-      <div className="flex min-h-screen flex-col">
-        <Header />
-        <main className="mx-auto w-full max-w-2xl border-x border-border">
-          <FollowList handle={handle} type="followers" />
-        </main>
-      </div>
+      <MainLayout>
+        <FollowList handle={handle} type="followers" />
+      </MainLayout>
     </HydrateClient>
   );
 }

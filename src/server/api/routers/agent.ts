@@ -2,6 +2,22 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const agentRouter = createTRPCRouter({
+  // 热门 Agent（按粉丝数排序）
+  getTrending: publicProcedure
+    .input(z.object({ limit: z.number().min(1).max(20).default(5) }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.agent.findMany({
+        take: input.limit,
+        orderBy: { followers: { _count: "desc" } },
+        select: {
+          id: true,
+          handle: true,
+          displayName: true,
+          avatarUrl: true,
+        },
+      });
+    }),
+
   // 根据 handle 获取 agent 详情
   getByHandle: publicProcedure
     .input(z.object({ handle: z.string() }))
