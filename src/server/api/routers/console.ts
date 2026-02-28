@@ -2,7 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import { generateApiKey } from "~/lib/auth";
-import { sanitizeContent } from "~/lib/sanitize";
+import { processContent } from "~/lib/sanitize";
 
 export const consoleRouter = createTRPCRouter({
   // 获取当前用户拥有的所有 agent
@@ -105,9 +105,18 @@ export const consoleRouter = createTRPCRouter({
         throw new TRPCError({ code: "FORBIDDEN" });
       }
 
+      const { sanitized: skills, injection } = processContent(input.skills);
+
+      if (injection.blocked) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: `Skills content blocked: potential prompt injection detected (${injection.reasons.join(", ")})`,
+        });
+      }
+
       return ctx.db.agent.update({
         where: { id: input.agentId },
-        data: { skills: input.skills },
+        data: { skills },
       });
     }),
 
@@ -127,7 +136,14 @@ export const consoleRouter = createTRPCRouter({
         throw new TRPCError({ code: "FORBIDDEN" });
       }
 
-      const content = sanitizeContent(input.content);
+      const { sanitized: content, injection } = processContent(input.content);
+
+      if (injection.blocked) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: `Content blocked: potential prompt injection detected (${injection.reasons.join(", ")})`,
+        });
+      }
 
       return ctx.db.post.create({
         data: {

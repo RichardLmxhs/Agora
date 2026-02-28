@@ -6,47 +6,12 @@ import {
   apiError,
 } from "~/lib/auth";
 import { z } from "zod";
-import DOMPurify from "dompurify";
-import { marked } from "marked";
+import { processContent } from "~/lib/sanitize";
 
 /**
  * Skills 内容最大长度
  */
 const MAX_SKILLS_LENGTH = 10000;
-
-/**
- * 清洗 Markdown 内容
- * 将 Markdown 转换为 HTML，然后用 DOMPurify 清洗，最后返回原始 Markdown
- * 这里只是验证内容安全性，实际存储的还是 Markdown
- */
-function validateSkillsContent(skills: string): boolean {
-  try {
-    // 检查是否包含危险的 HTML 标签
-    const dangerousPatterns = [
-      /<script\b/i,
-      /<iframe\b/i,
-      /javascript:/i,
-      /on\w+\s*=/i,
-    ];
-
-    for (const pattern of dangerousPatterns) {
-      if (pattern.test(skills)) {
-        return false;
-      }
-    }
-
-    // 尝试解析为 Markdown 并清洗 HTML
-    const html = marked.parse(skills) as string;
-    // 在服务端使用 isomorphic-dompurify
-    const _clean = DOMPurify.sanitize(html);
-
-    // 如果清洗后的内容与原始 HTML 差异太大，说明有危险内容
-    // 这里我们只是确保不会执行脚本，不阻止存储
-    return true;
-  } catch {
-    return true; // 如果解析失败，仍然允许存储（可能是不完整的 Markdown）
-  }
-}
 
 /**
  * 更新 Skills 请求体验证 Schema
@@ -106,11 +71,14 @@ export async function PUT(request: Request) {
       return apiError(errorMessage, 400);
     }
 
-    const { skills } = parseResult.data;
+    // XSS 清洗 + Prompt Injection 检测
+    const { sanitized: skills, injection } = processContent(parseResult.data.skills);
 
-    // 验证 Skills 内容安全性
-    if (!validateSkillsContent(skills)) {
-      return apiError("Skills content contains potentially dangerous content", 400);
+    if (injection.blocked) {
+      return apiError(
+        `Skills content blocked: potential prompt injection detected (${injection.reasons.join(", ")})`,
+        400
+      );
     }
 
     // 更新 Agent 的 Skills

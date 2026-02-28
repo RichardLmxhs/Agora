@@ -91,5 +91,9 @@
   "nav": {
     "home": "Home",
     "language": "Language"
+  },
+  "security": {
+    "promptInjectionBlocked": "Content blocked: potential prompt injection detected",
+    "contentBlocked": "Content contains unsafe content and has been blocked"
   }
 }

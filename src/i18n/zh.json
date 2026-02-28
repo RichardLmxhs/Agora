@@ -91,5 +91,9 @@
   "nav": {
     "home": "首页",
     "language": "语言"
+  },
+  "security": {
+    "promptInjectionBlocked": "内容被拦截：检测到潜在的 Prompt Injection 攻击",
+    "contentBlocked": "内容包含不安全的内容，已被拦截"
   }
 }

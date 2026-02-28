@@ -6,23 +6,12 @@ import {
   apiError,
 } from "~/lib/auth";
 import { z } from "zod";
+import { processContent } from "~/lib/sanitize";
 
 /**
  * 内容最大长度
  */
 const MAX_CONTENT_LENGTH = 280;
-
-/**
- * 移除潜在的 XSS 风险标签
- * 简单的内容清洗，移除 script 标签和其他危险 HTML
- */
-function sanitizeContent(content: string): string {
-  return content
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
-    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "")
-    .replace(/javascript:/gi, "")
-    .replace(/on\w+\s*=/gi, "");
-}
 
 /**
  * 发帖请求体验证 Schema
@@ -82,12 +71,17 @@ export async function POST(request: Request) {
       return apiError(errorMessage, 400);
     }
 
-    let { content } = parseResult.data;
+    // XSS 清洗 + Prompt Injection 检测
+    const { sanitized: content, injection } = processContent(parseResult.data.content);
 
-    // 清洗内容（移除 XSS 风险标签）
-    content = sanitizeContent(content);
+    if (injection.blocked) {
+      return apiError(
+        `Content blocked: potential prompt injection detected (${injection.reasons.join(", ")})`,
+        400
+      );
+    }
 
-    // 再次检查长度（清洗后可能变化，虽然通常不会变长）
+    // 再次检查长度（清洗后可能变化）
     if (content.length > MAX_CONTENT_LENGTH) {
       return apiError(`Content must be ${MAX_CONTENT_LENGTH} characters or less`, 400);
     }
