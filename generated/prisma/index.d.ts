@@ -6291,6 +6291,9 @@ export namespace Prisma {
     handle: string | null
     displayName: string | null
     apiKey: string | null
+    apiKeyPrefix: string | null
+    oldApiKey: string | null
+    oldKeyExpiresAt: Date | null
     skills: string | null
     avatarUrl: string | null
     ownerId: string | null
@@ -6303,6 +6306,9 @@ export namespace Prisma {
     handle: string | null
     displayName: string | null
     apiKey: string | null
+    apiKeyPrefix: string | null
+    oldApiKey: string | null
+    oldKeyExpiresAt: Date | null
     skills: string | null
     avatarUrl: string | null
     ownerId: string | null
@@ -6315,6 +6321,9 @@ export namespace Prisma {
     handle: number
     displayName: number
     apiKey: number
+    apiKeyPrefix: number
+    oldApiKey: number
+    oldKeyExpiresAt: number
     skills: number
     avatarUrl: number
     ownerId: number
@@ -6329,6 +6338,9 @@ export namespace Prisma {
     handle?: true
     displayName?: true
     apiKey?: true
+    apiKeyPrefix?: true
+    oldApiKey?: true
+    oldKeyExpiresAt?: true
     skills?: true
     avatarUrl?: true
     ownerId?: true
@@ -6341,6 +6353,9 @@ export namespace Prisma {
     handle?: true
     displayName?: true
     apiKey?: true
+    apiKeyPrefix?: true
+    oldApiKey?: true
+    oldKeyExpiresAt?: true
     skills?: true
     avatarUrl?: true
     ownerId?: true
@@ -6353,6 +6368,9 @@ export namespace Prisma {
     handle?: true
     displayName?: true
     apiKey?: true
+    apiKeyPrefix?: true
+    oldApiKey?: true
+    oldKeyExpiresAt?: true
     skills?: true
     avatarUrl?: true
     ownerId?: true
@@ -6438,6 +6456,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix: string
+    oldApiKey: string | null
+    oldKeyExpiresAt: Date | null
     skills: string
     avatarUrl: string | null
     ownerId: string | null
@@ -6467,6 +6488,9 @@ export namespace Prisma {
     handle?: boolean
     displayName?: boolean
     apiKey?: boolean
+    apiKeyPrefix?: boolean
+    oldApiKey?: boolean
+    oldKeyExpiresAt?: boolean
     skills?: boolean
     avatarUrl?: boolean
     ownerId?: boolean
@@ -6487,6 +6511,9 @@ export namespace Prisma {
     handle?: boolean
     displayName?: boolean
     apiKey?: boolean
+    apiKeyPrefix?: boolean
+    oldApiKey?: boolean
+    oldKeyExpiresAt?: boolean
     skills?: boolean
     avatarUrl?: boolean
     ownerId?: boolean
@@ -6500,6 +6527,9 @@ export namespace Prisma {
     handle?: boolean
     displayName?: boolean
     apiKey?: boolean
+    apiKeyPrefix?: boolean
+    oldApiKey?: boolean
+    oldKeyExpiresAt?: boolean
     skills?: boolean
     avatarUrl?: boolean
     ownerId?: boolean
@@ -6513,6 +6543,9 @@ export namespace Prisma {
     handle?: boolean
     displayName?: boolean
     apiKey?: boolean
+    apiKeyPrefix?: boolean
+    oldApiKey?: boolean
+    oldKeyExpiresAt?: boolean
     skills?: boolean
     avatarUrl?: boolean
     ownerId?: boolean
@@ -6520,7 +6553,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "handle" | "displayName" | "apiKey" | "skills" | "avatarUrl" | "ownerId" | "createdAt" | "updatedAt", ExtArgs["result"]["agent"]>
+  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "handle" | "displayName" | "apiKey" | "apiKeyPrefix" | "oldApiKey" | "oldKeyExpiresAt" | "skills" | "avatarUrl" | "ownerId" | "createdAt" | "updatedAt", ExtArgs["result"]["agent"]>
   export type AgentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | Agent$ownerArgs<ExtArgs>
     posts?: boolean | Agent$postsArgs<ExtArgs>
@@ -6554,6 +6587,9 @@ export namespace Prisma {
       handle: string
       displayName: string
       apiKey: string
+      apiKeyPrefix: string
+      oldApiKey: string | null
+      oldKeyExpiresAt: Date | null
       skills: string
       avatarUrl: string | null
       ownerId: string | null
@@ -6993,6 +7029,9 @@ export namespace Prisma {
     readonly handle: FieldRef<"Agent", 'String'>
     readonly displayName: FieldRef<"Agent", 'String'>
     readonly apiKey: FieldRef<"Agent", 'String'>
+    readonly apiKeyPrefix: FieldRef<"Agent", 'String'>
+    readonly oldApiKey: FieldRef<"Agent", 'String'>
+    readonly oldKeyExpiresAt: FieldRef<"Agent", 'DateTime'>
     readonly skills: FieldRef<"Agent", 'String'>
     readonly avatarUrl: FieldRef<"Agent", 'String'>
     readonly ownerId: FieldRef<"Agent", 'String'>
@@ -13079,6 +13118,9 @@ export namespace Prisma {
     handle: 'handle',
     displayName: 'displayName',
     apiKey: 'apiKey',
+    apiKeyPrefix: 'apiKeyPrefix',
+    oldApiKey: 'oldApiKey',
+    oldKeyExpiresAt: 'oldKeyExpiresAt',
     skills: 'skills',
     avatarUrl: 'avatarUrl',
     ownerId: 'ownerId',
@@ -13498,6 +13540,9 @@ export namespace Prisma {
     handle?: StringFilter<"Agent"> | string
     displayName?: StringFilter<"Agent"> | string
     apiKey?: StringFilter<"Agent"> | string
+    apiKeyPrefix?: StringFilter<"Agent"> | string
+    oldApiKey?: StringNullableFilter<"Agent"> | string | null
+    oldKeyExpiresAt?: DateTimeNullableFilter<"Agent"> | Date | string | null
     skills?: StringFilter<"Agent"> | string
     avatarUrl?: StringNullableFilter<"Agent"> | string | null
     ownerId?: StringNullableFilter<"Agent"> | string | null
@@ -13517,6 +13562,9 @@ export namespace Prisma {
     handle?: SortOrder
     displayName?: SortOrder
     apiKey?: SortOrder
+    apiKeyPrefix?: SortOrder
+    oldApiKey?: SortOrderInput | SortOrder
+    oldKeyExpiresAt?: SortOrderInput | SortOrder
     skills?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     ownerId?: SortOrderInput | SortOrder
@@ -13539,6 +13587,9 @@ export namespace Prisma {
     OR?: AgentWhereInput[]
     NOT?: AgentWhereInput | AgentWhereInput[]
     displayName?: StringFilter<"Agent"> | string
+    apiKeyPrefix?: StringFilter<"Agent"> | string
+    oldApiKey?: StringNullableFilter<"Agent"> | string | null
+    oldKeyExpiresAt?: DateTimeNullableFilter<"Agent"> | Date | string | null
     skills?: StringFilter<"Agent"> | string
     avatarUrl?: StringNullableFilter<"Agent"> | string | null
     ownerId?: StringNullableFilter<"Agent"> | string | null
@@ -13558,6 +13609,9 @@ export namespace Prisma {
     handle?: SortOrder
     displayName?: SortOrder
     apiKey?: SortOrder
+    apiKeyPrefix?: SortOrder
+    oldApiKey?: SortOrderInput | SortOrder
+    oldKeyExpiresAt?: SortOrderInput | SortOrder
     skills?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     ownerId?: SortOrderInput | SortOrder
@@ -13576,6 +13630,9 @@ export namespace Prisma {
     handle?: StringWithAggregatesFilter<"Agent"> | string
     displayName?: StringWithAggregatesFilter<"Agent"> | string
     apiKey?: StringWithAggregatesFilter<"Agent"> | string
+    apiKeyPrefix?: StringWithAggregatesFilter<"Agent"> | string
+    oldApiKey?: StringNullableWithAggregatesFilter<"Agent"> | string | null
+    oldKeyExpiresAt?: DateTimeNullableWithAggregatesFilter<"Agent"> | Date | string | null
     skills?: StringWithAggregatesFilter<"Agent"> | string
     avatarUrl?: StringNullableWithAggregatesFilter<"Agent"> | string | null
     ownerId?: StringNullableWithAggregatesFilter<"Agent"> | string | null
@@ -14154,6 +14211,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -14172,6 +14232,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     ownerId?: string | null
@@ -14190,6 +14253,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14208,6 +14274,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     ownerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14226,6 +14295,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     ownerId?: string | null
@@ -14238,6 +14310,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14249,6 +14324,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     ownerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14877,6 +14955,9 @@ export namespace Prisma {
     handle?: SortOrder
     displayName?: SortOrder
     apiKey?: SortOrder
+    apiKeyPrefix?: SortOrder
+    oldApiKey?: SortOrder
+    oldKeyExpiresAt?: SortOrder
     skills?: SortOrder
     avatarUrl?: SortOrder
     ownerId?: SortOrder
@@ -14889,6 +14970,9 @@ export namespace Prisma {
     handle?: SortOrder
     displayName?: SortOrder
     apiKey?: SortOrder
+    apiKeyPrefix?: SortOrder
+    oldApiKey?: SortOrder
+    oldKeyExpiresAt?: SortOrder
     skills?: SortOrder
     avatarUrl?: SortOrder
     ownerId?: SortOrder
@@ -14901,6 +14985,9 @@ export namespace Prisma {
     handle?: SortOrder
     displayName?: SortOrder
     apiKey?: SortOrder
+    apiKeyPrefix?: SortOrder
+    oldApiKey?: SortOrder
+    oldKeyExpiresAt?: SortOrder
     skills?: SortOrder
     avatarUrl?: SortOrder
     ownerId?: SortOrder
@@ -16141,6 +16228,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -16158,6 +16248,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -16316,6 +16409,9 @@ export namespace Prisma {
     handle?: StringFilter<"Agent"> | string
     displayName?: StringFilter<"Agent"> | string
     apiKey?: StringFilter<"Agent"> | string
+    apiKeyPrefix?: StringFilter<"Agent"> | string
+    oldApiKey?: StringNullableFilter<"Agent"> | string | null
+    oldKeyExpiresAt?: DateTimeNullableFilter<"Agent"> | Date | string | null
     skills?: StringFilter<"Agent"> | string
     avatarUrl?: StringNullableFilter<"Agent"> | string | null
     ownerId?: StringNullableFilter<"Agent"> | string | null
@@ -16806,6 +16902,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -16823,6 +16922,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     ownerId?: string | null
@@ -16924,6 +17026,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16941,6 +17046,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     ownerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17029,6 +17137,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -17046,6 +17157,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     ownerId?: string | null
@@ -17108,6 +17222,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17125,6 +17242,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     ownerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17165,6 +17285,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -17182,6 +17305,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     ownerId?: string | null
@@ -17277,6 +17403,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17294,6 +17423,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     ownerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17373,6 +17505,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -17390,6 +17525,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     ownerId?: string | null
@@ -17485,6 +17623,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17502,6 +17643,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     ownerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17558,6 +17702,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -17575,6 +17722,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     ownerId?: string | null
@@ -17597,6 +17747,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -17614,6 +17767,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     ownerId?: string | null
@@ -17647,6 +17803,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17664,6 +17823,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     ownerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17692,6 +17854,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17709,6 +17874,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     ownerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17758,6 +17926,9 @@ export namespace Prisma {
     handle: string
     displayName: string
     apiKey: string
+    apiKeyPrefix?: string
+    oldApiKey?: string | null
+    oldKeyExpiresAt?: Date | string | null
     skills: string
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -17865,6 +18036,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17882,6 +18056,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17899,6 +18076,9 @@ export namespace Prisma {
     handle?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
     apiKey?: StringFieldUpdateOperationsInput | string
+    apiKeyPrefix?: StringFieldUpdateOperationsInput | string
+    oldApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    oldKeyExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

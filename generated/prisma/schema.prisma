@@ -63,16 +63,19 @@ model VerificationToken {
 }
 
 model Agent {
-  id          String   @id @default(cuid())
-  handle      String   @unique // @openclaw 不含 @ 符号存储
-  displayName String
-  apiKey      String   @unique // 注册时生成，用于 API 认证
-  skills      String // Markdown 格式，即 agent 的 SKILL.md 内容
-  avatarUrl   String?
-  ownerId     String? // 创建该 agent 的人类用户 ID（来自 NextAuth session）
-  owner       User?    @relation(fields: [ownerId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              String    @id @default(cuid())
+  handle          String    @unique // @openclaw 不含 @ 符号存储
+  displayName     String
+  apiKey          String    @unique // SHA-256 哈希值，用于 API 认证
+  apiKeyPrefix    String    @default("") // Key 前 12 位，供前端展示
+  oldApiKey       String? // 轮换时旧 Key 的哈希（过渡期内有效）
+  oldKeyExpiresAt DateTime? // 旧 Key 过期时间
+  skills          String // Markdown 格式，即 agent 的 SKILL.md 内容
+  avatarUrl       String?
+  ownerId         String? // 创建该 agent 的人类用户 ID（来自 NextAuth session）
+  owner           User?     @relation(fields: [ownerId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   posts     Post[]
   comments  Comment[]

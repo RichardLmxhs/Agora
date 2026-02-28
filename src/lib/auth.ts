@@ -8,11 +8,39 @@ import { checkRateLimit, RATE_LIMIT_CONFIG } from "./rateLimit";
 export const API_KEY_PREFIX = "af_live_";
 
 /**
- * 生成 API Key
- * 格式: af_live_ + 32位随机字母数字（64字符十六进制）
+ * 轮换过渡期（毫秒）— 5 分钟
  */
-export function generateApiKey(): string {
-  return API_KEY_PREFIX + crypto.randomBytes(32).toString("hex");
+const KEY_ROTATION_GRACE_PERIOD_MS = 5 * 60 * 1000;
+
+/**
+ * SHA-256 哈希 API Key
+ */
+export function hashApiKey(key: string): string {
+  return crypto.createHash("sha256").update(key).digest("hex");
+}
+
+/**
+ * 提取 API Key 前缀（前 12 位），用于前端展示
+ */
+export function getApiKeyPrefix(key: string): string {
+  return key.slice(0, 12);
+}
+
+/**
+ * 生成 API Key，返回明文、哈希和前缀
+ */
+export function generateApiKey(): { plainKey: string; hashedKey: string; prefix: string } {
+  const plainKey = API_KEY_PREFIX + crypto.randomBytes(32).toString("hex");
+  const hashedKey = hashApiKey(plainKey);
+  const prefix = getApiKeyPrefix(plainKey);
+  return { plainKey, hashedKey, prefix };
+}
+
+/**
+ * 计算轮换过渡期到期时间
+ */
+export function getKeyRotationExpiresAt(): Date {
+  return new Date(Date.now() + KEY_ROTATION_GRACE_PERIOD_MS);
 }
 
 /**
@@ -24,18 +52,31 @@ export function isValidApiKeyFormat(apiKey: string): boolean {
 
 /**
  * 通过 API Key 获取 Agent
- * @returns Agent 对象或 null（无效时）
+ * 先匹配当前 apiKey（哈希），再匹配 oldApiKey（过渡期内）
  */
 export async function getAgentByApiKey(apiKey: string) {
   if (!isValidApiKeyFormat(apiKey)) {
     return null;
   }
 
+  const hashed = hashApiKey(apiKey);
+
+  // 先查当前 Key
   const agent = await db.agent.findUnique({
-    where: { apiKey },
+    where: { apiKey: hashed },
   });
 
-  return agent;
+  if (agent) return agent;
+
+  // 再查旧 Key（过渡期内）
+  const agentWithOldKey = await db.agent.findFirst({
+    where: {
+      oldApiKey: hashed,
+      oldKeyExpiresAt: { gt: new Date() },
+    },
+  });
+
+  return agentWithOldKey;
 }
 
 /**
@@ -54,7 +95,6 @@ export function extractBearerToken(authHeader: string | null): string | null {
 
 /**
  * 验证请求并返回 Agent（不含限流）
- * 用于只读操作或不需要限流的场景
  */
 export async function authenticateRequest(authHeader: string | null) {
   const token = extractBearerToken(authHeader);
@@ -72,7 +112,7 @@ export async function authenticateRequest(authHeader: string | null) {
 
 /**
  * 验证请求并返回 Agent（包含限流检查）
- * 用于写操作，每个 API Key 每分钟最多 30 次请求
+ * 限流使用 agent.id 作为 key（而非明文 token），避免哈希前后不一致
  */
 export async function authenticateRequestWithRateLimit(authHeader: string | null) {
   const token = extractBearerToken(authHeader);
@@ -95,8 +135,8 @@ export async function authenticateRequestWithRateLimit(authHeader: string | null
     };
   }
 
-  // 检查限流
-  const rateLimitResult = checkRateLimit(token);
+  // 使用 agent.id 作为限流 key（稳定且不泄露 token）
+  const rateLimitResult = checkRateLimit(agent.id);
   const rateLimitInfo = {
     limit: RATE_LIMIT_CONFIG.maxRequests,
     remaining: rateLimitResult.remaining,

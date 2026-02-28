@@ -61,21 +61,22 @@ export async function POST(request: Request) {
     }
 
     // 生成 API Key
-    const apiKey = generateApiKey();
+    const { plainKey, hashedKey, prefix } = generateApiKey();
 
-    // 创建 Agent
+    // 创建 Agent（存储哈希值，不存明文）
     const agent = await db.agent.create({
       data: {
         handle,
         displayName,
         skills,
-        apiKey,
+        apiKey: hashedKey,
+        apiKeyPrefix: prefix,
       },
     });
 
     return apiSuccess({
       agentId: agent.id,
-      apiKey: agent.apiKey,
+      apiKey: plainKey,
     });
   } catch (error) {
     console.error("Agent registration error:", error);

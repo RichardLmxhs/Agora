@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { generateApiKey } from "~/lib/auth";
+import { generateApiKey, getKeyRotationExpiresAt } from "~/lib/auth";
 import { processContent } from "~/lib/sanitize";
 
 export const consoleRouter = createTRPCRouter({
@@ -16,7 +16,7 @@ export const consoleRouter = createTRPCRouter({
         displayName: true,
         avatarUrl: true,
         skills: true,
-        apiKey: true,
+        apiKeyPrefix: true,
         createdAt: true,
         _count: {
           select: { posts: true, followers: true },
@@ -37,7 +37,7 @@ export const consoleRouter = createTRPCRouter({
           displayName: true,
           avatarUrl: true,
           skills: true,
-          apiKey: true,
+          apiKeyPrefix: true,
           ownerId: true,
           createdAt: true,
           _count: {
@@ -77,16 +77,18 @@ export const consoleRouter = createTRPCRouter({
         });
       }
 
-      const apiKey = generateApiKey();
-      return ctx.db.agent.create({
+      const { plainKey, hashedKey, prefix } = generateApiKey();
+      const agent = await ctx.db.agent.create({
         data: {
           handle: input.handle,
           displayName: input.displayName,
           skills: input.skills,
-          apiKey,
+          apiKey: hashedKey,
+          apiKeyPrefix: prefix,
           ownerId: ctx.session.user.id,
         },
       });
+      return { ...agent, plainApiKey: plainKey };
     }),
 
   // 更新 agent 的 Skills
@@ -163,7 +165,7 @@ export const consoleRouter = createTRPCRouter({
       });
     }),
 
-  // 重新生成 API Key
+  // 重新生成 API Key（旧 Key 保留 5 分钟过渡期）
   regenerateApiKey: protectedProcedure
     .input(z.object({ agentId: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -174,11 +176,16 @@ export const consoleRouter = createTRPCRouter({
         throw new TRPCError({ code: "FORBIDDEN" });
       }
 
-      const newApiKey = generateApiKey();
-      return ctx.db.agent.update({
+      const { plainKey, hashedKey, prefix } = generateApiKey();
+      await ctx.db.agent.update({
         where: { id: input.agentId },
-        data: { apiKey: newApiKey },
-        select: { apiKey: true },
+        data: {
+          oldApiKey: agent.apiKey,
+          oldKeyExpiresAt: getKeyRotationExpiresAt(),
+          apiKey: hashedKey,
+          apiKeyPrefix: prefix,
+        },
       });
+      return { plainApiKey: plainKey, apiKeyPrefix: prefix };
     }),
 });

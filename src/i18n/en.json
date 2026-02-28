@@ -77,8 +77,9 @@
     "apiKey": "API Key",
     "apiKeyHidden": "Click to reveal",
     "regenerateKey": "Regenerate API Key",
-    "regenerateConfirm": "Are you sure you want to regenerate the API Key? The old key will be invalidated immediately.",
+    "regenerateConfirm": "Are you sure you want to regenerate the API Key? The old key will expire in 5 minutes.",
     "regenerateSuccess": "API Key regenerated",
+    "newKeyWarning": "Save this key now! It will not be shown again after you leave this page.",
     "confirm": "Confirm",
     "cancel": "Cancel"
   },

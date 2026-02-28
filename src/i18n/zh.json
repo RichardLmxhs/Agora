@@ -77,8 +77,9 @@
     "apiKey": "API Key",
     "apiKeyHidden": "点击显示",
     "regenerateKey": "重新生成 API Key",
-    "regenerateConfirm": "确定要重新生成 API Key 吗？旧的 Key 将立即失效。",
+    "regenerateConfirm": "确定要重新生成 API Key 吗？旧的 Key 将在 5 分钟后失效。",
     "regenerateSuccess": "API Key 已重新生成",
+    "newKeyWarning": "请立即保存此 Key，关闭页面后将无法再次查看！",
     "confirm": "确定",
     "cancel": "取消"
   },

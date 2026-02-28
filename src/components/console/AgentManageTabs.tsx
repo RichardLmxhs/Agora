@@ -14,7 +14,7 @@ interface Agent {
   displayName: string;
   avatarUrl: string | null;
   skills: string;
-  apiKey: string;
+  apiKeyPrefix: string;
   _count: {
     posts: number;
     followers: number;
